@@ -10,7 +10,7 @@ static const char dmenufont[]       = "monospace:size=14";
 static const char col_gray1[]       = "#1d2021";
 static const char col_gray2[]       = "#504945";
 static const char col_gray3[]       = "#bdae93";
-static const char col_gray4[]       = "#f9f5d7";
+static const char col_gray4[]       = "#ebdbb2";
 static const char col_lightblue[]   = "#458588";
 static const char col_blue[]        = "#076678";
 static const char *colors[][3]      = {
@@ -59,9 +59,13 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_blue, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *volupcmd[]  = { "sh", "-c", "pulsemixer --change-volume 5; kill -s 38 $(pidof dwm-status)", NULL };
+static const char *voldowncmd[]  = { "sh", "-c", "pulsemixer --change-volume -5; kill -s 38 $(pidof dwm-status)", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,                       XK_equal,  spawn,          {.v = volupcmd } },
+	{ MODKEY,                       XK_minus,  spawn,          {.v = voldowncmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
